@@ -6,11 +6,15 @@ contacts = Blueprint('contacts', __name__, template_folder='app/templates')
 
 @contacts.route('/')
 def index():
-    cur = mysql.connection.cursor()
-    cur.execute('SELECT * FROM contacts')
-    data = cur.fetchall()
-    cur.close()
-    return render_template('index.html', contacts=data)
+    try:
+        cur = mysql.connection.cursor()
+        cur.execute('SELECT * FROM contacts')
+        data = cur.fetchall()
+        cur.close()
+        return render_template('index.html', contacts=data)
+    except Exception as e:
+        flash(e.args[1])
+        return render_template('internal-error.html')
 
 
 @contacts.route('/add_contact', methods=['POST'])
