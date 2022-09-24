@@ -4,3 +4,6 @@ CREATE TABLE contacts(
   phone VARCHAR(255),
   email VARCHAR(255) NOT NULL UNIQUE
 );
+
+-- Add deleted field in the data table - set existing isDeleted to false
+ALTER TABLE contacts ADD (isDeleted BOOLEAN default false);

@@ -9,3 +9,12 @@ if(btnDelete) {
     });
   })
 }
+function toggleDeletedTable() {
+  let deletedTable = document.getElementById("deleted");
+  if (deletedTable.style.visibility === "hidden") {
+    deletedTable.style.visibility = "visible";
+  } else {
+    deletedTable.style.visibility = "hidden";
+  }
+}
+

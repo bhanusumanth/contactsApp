@@ -58,8 +58,29 @@
           {% endfor %}
         </tbody>
       </table>
+        <div><br>&nbsp;</div>
+        <button type="button" class="btn btn-primary" style="bottom: 24px" onclick="toggleDeletedTable()">Show Deleted Contacts</button>
+        <br>
+        <table class="table  table-hover table-bordered" id="deleted" style="visibility: hidden" >
+        <thead>
+          <tr class="table-primary">
+            <td>fullname</td>
+            <td>email</td>
+            <td>phone</td>
+          </tr>
+        </thead>
+        <tbody >
+          {% for contact in deleted_contacts %}
+          <tr class="table-danger">
+            <td>{{contact.fullname}}</td>
+            <td>{{contact.email}}</td>
+            <td>{{contact.phone}}</td>
+
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
-</div>
 
 {% endblock %}

@@ -11,7 +11,9 @@ def index():
         cur.execute('SELECT * FROM contacts')
         data = cur.fetchall()
         cur.close()
-        return render_template('index.html', contacts=data)
+        deleted_records = list(filter(lambda x: x['isDeleted'] == 1, data))
+        contact_records = list(filter(lambda x: x['isDeleted'] == 0, data))
+        return render_template('index.html', contacts=contact_records, deleted_contacts=deleted_records)
     except Exception as e:
         flash(e.args[1])
         return render_template('internal-error.html')
@@ -67,7 +69,12 @@ def update_contact(id):
 @contacts.route('/delete/<string:id>', methods=['POST', 'GET'])
 def delete_contact(id):
     cur = mysql.connection.cursor()
-    cur.execute('DELETE FROM contacts WHERE id = {0}'.format(id))
+    deletion_update_query = """
+    UPDATE contacts
+    set isDeleted = TRUE 
+    WHERE id = {0}
+    """.format(id)
+    cur.execute(deletion_update_query)
     mysql.connection.commit()
     flash('Contact Removed Successfully')
     return redirect(url_for('contacts.index'))
